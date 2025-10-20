@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Altersprüfung - 18 Jahre</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .info-text {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .date-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .date-label {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .date-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .age-info {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        .footer {
+            margin-top: 30px;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .date-value {
+                font-size: 2rem;
+            }
+
+            .info-text {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍺 Altersprüfung Deutschland</h1>
+        <p class="info-text">
+            Um in Deutschland Alkohol kaufen zu dürfen, muss man mindestens 18 Jahre alt sein.
+        </p>
+        <p class="info-text">
+            Wer heute 18 Jahre alt wird, ist geboren am:
+        </p>
+        <div class="date-display">
+            <div class="date-label">Geburtsdatum</div>
+            <div class="date-value" id="birthdayDate">Lädt...</div>
+            <div class="age-info">Diese Person ist heute genau 18 Jahre alt</div>
+        </div>
+        <p class="footer">
+            Mindestalter für Alkoholkauf in Deutschland: 18 Jahre
+        </p>
+    </div>
+
+    <script>
+        // Calculate the date that is exactly 18 years ago from today
+        function calculateBirthday() {
+            const today = new Date();
+            const eighteenYearsAgo = new Date(today);
+            eighteenYearsAgo.setFullYear(today.getFullYear() - 18);
+            
+            // Format the date in German format (DD.MM.YYYY)
+            const day = String(eighteenYearsAgo.getDate()).padStart(2, '0');
+            const month = String(eighteenYearsAgo.getMonth() + 1).padStart(2, '0');
+            const year = eighteenYearsAgo.getFullYear();
+            
+            return `${day}.${month}.${year}`;
+        }
+
+        // Display the calculated birthday
+        document.getElementById('birthdayDate').textContent = calculateBirthday();
+    </script>
+</body>
+</html>
