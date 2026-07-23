@@ -7,7 +7,6 @@ on:
   push:
     branches:
       - main
-      - claude/website-simplification-sgml3t
   workflow_dispatch:
 
 permissions:
