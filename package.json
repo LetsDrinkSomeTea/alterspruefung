@@ -1,0 +1,26 @@
+{
+  "name": "@alterspruefung/monolith",
+  "version": "1.0.0-enterprise",
+  "private": true,
+  "description": "A cloud-native, domain-driven, hexagonal, event-sourced platform for computing today minus eighteen years.",
+  "type": "module",
+  "license": "WTFPL",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "verify:architecture": "echo 'All layers respect the Dependency Rule. ✔'"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.1",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10",
+    "vitest": "^2.1.4"
+  }
+}

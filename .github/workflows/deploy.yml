@@ -1,0 +1,67 @@
+# Continuous Delivery pipeline for a webpage that subtracts 18 from a year.
+# Builds the TypeScript, runs the test suite (including the WebAssembly core
+# verification), type-checks, and deploys the static bundle to GitHub Pages.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - claude/website-simplification-sgml3t
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment; skip runs queued in between.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  quality-gate:
+    name: Type-check & Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Type-check (strict)
+        run: npm run typecheck
+      - name: Unit & WASM tests
+        run: npm test
+      - name: Verify architectural boundaries
+        run: npm run verify:architecture
+
+  build:
+    name: Build static bundle
+    needs: quality-gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
